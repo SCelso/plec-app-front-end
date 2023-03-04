@@ -1,9 +1,11 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import "./style.css";
 // TODO: Define routing system
 // import router from "./router";
 import PrimeVue from "primevue/config";
 import "primevue/resources/primevue.min.css";
+import "primevue/resources/themes/lara-light-purple/theme.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 import "sweetalert2/src/sweetalert2.scss";
@@ -13,8 +15,6 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Checkbox from "primevue/checkbox";
 import ProgressSpinner from "primevue/progressspinner";
-
-import "primevue/resources/themes/lara-light-purple/theme.css";
 
 const app = createApp(App);
 // GLOBAL PROPERTIES
