@@ -1,8 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import "./style.css";
-// TODO: Define routing system
-// import router from "./router";
+import router from "./router";
 import PrimeVue from "primevue/config";
 import "primevue/resources/primevue.min.css";
 import "primevue/resources/themes/lara-light-purple/theme.css";
@@ -20,7 +19,7 @@ const app = createApp(App);
 // GLOBAL PROPERTIES
 app.provide("apiUrl", "http://localhost:3000/api/");
 
-// app.use(router);
+app.use(router);
 
 app.use(PrimeVue, { ripple: true });
 
