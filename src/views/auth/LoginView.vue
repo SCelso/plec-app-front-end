@@ -49,21 +49,21 @@ function signIn(event: Event) {
                     class="mb-3"
                 />
                 <div class="text-900 text-3xl font-medium mb-3">Bienvenido</div>
-                <span class="text-600 font-medium line-height-3"
-                    >¿Aún no tienes una cuenta?</span
-                >
+                <span class="text-600 font-medium line-height-3">{{
+                    $t("login.dont_have_account")
+                }}</span>
                 <RouterLink class="no-underline" to="/register">
                     <a
                         class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
-                        >¡Crear una!</a
+                        >{{ $t("login.create_account") }}</a
                     >
                 </RouterLink>
             </div>
 
             <div>
-                <label for="email" class="block text-900 font-medium mb-2"
-                    >Correo electrónico</label
-                >
+                <label for="email" class="block text-900 font-medium mb-2">{{
+                    $t("email")
+                }}</label>
                 <InputText
                     v-model.trim="user.email"
                     id="email"
@@ -71,9 +71,9 @@ function signIn(event: Event) {
                     class="w-full mb-3"
                 />
 
-                <label for="password" class="block text-900 font-medium mb-2"
-                    >Contraseña</label
-                >
+                <label for="password" class="block text-900 font-medium mb-2">{{
+                    $t("password")
+                }}</label>
                 <InputText
                     v-model="user.password"
                     id="password"
@@ -86,7 +86,7 @@ function signIn(event: Event) {
                 >
                     <a
                         class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
-                        >¿Has olvidado la contraseña?</a
+                        >{{ $t("login.forgot_password") }}</a
                     >
                 </div>
 
@@ -103,7 +103,7 @@ function signIn(event: Event) {
 
                 <Button
                     @click="signIn"
-                    label="Iniciar sesión"
+                    :label="$t('login.login')"
                     icon="pi pi-user"
                     class="w-full"
                 ></Button>
