@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./style.css";
 import router from "./router";
+import i18n from "./i18n";
 import PrimeVue from "primevue/config";
 import "primevue/resources/primevue.min.css";
 import "primevue/resources/themes/lara-light-purple/theme.css";
@@ -20,6 +21,7 @@ const app = createApp(App);
 app.provide("apiUrl", "http://localhost:3000/api/");
 
 app.use(router);
+app.use(i18n);
 
 app.use(PrimeVue, { ripple: true });
 
