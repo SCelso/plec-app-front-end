@@ -13,6 +13,13 @@ const i18n = createI18n({
                 forgot_password: "¿Olvidaste tu contraseña?",
                 login: "Iniciar sesión",
             },
+            play: {
+                search_professor: "Buscar profesor",
+                search_tags: "Buscar etiquetas",
+                next: "Siguiente",
+                tags: "Etiquetas",
+                professors: "Profesores",
+            },
         },
         en: {
             email: "Email",
@@ -22,6 +29,13 @@ const i18n = createI18n({
                 create_account: "Create one!",
                 forgot_password: "Forgot password?",
                 login: "Sign in",
+            },
+            play: {
+                search_professor: "Search professor",
+                search_tags: "Search tags",
+                next: "Next",
+                tags: "Tags",
+                professors: "Professors",
             },
         },
     },

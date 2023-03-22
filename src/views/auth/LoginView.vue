@@ -4,10 +4,9 @@ import { RouterLink, useRouter } from "vue-router";
 
 import Message from "primevue/message";
 import { User } from "../../interfaces/user.interface";
-
-// import type { LoginResponse } from "../../interfaces/responses/login-response.interface";
-// import type { ErrorResponse } from "../../interfaces/responses/error-response.interface";
-// import { useAuth } from "../../composables/useAuth";
+import { useAuth } from "../../composables/useAuth";
+import { LoginResponse } from "../../interfaces/responses/login.response";
+import { ErrorResponse } from "../../interfaces/responses/error.response";
 
 const isLoading: Ref<boolean> = ref(false);
 const user: Ref<User> = ref({
@@ -15,7 +14,7 @@ const user: Ref<User> = ref({
     password: "",
 });
 const errors: Ref<string[]> = ref([]);
-// const { logIn } = useAuth();
+const { logIn } = useAuth();
 
 const router = useRouter();
 
@@ -23,18 +22,18 @@ function signIn(event: Event) {
     console.log("signIn");
     console.log(user.value);
 
-    // logIn(isLoading, user)
-    //     .then((data: LoginResponse) => {
-    //         errors.value = [];
-    //         router.push({ path: "/home", replace: true });
-    //     })
-    //     .catch((error: ErrorResponse) => {
-    //         if (Array.isArray(error.message)) {
-    //             errors.value = error.message;
-    //         } else {
-    //             errors.value.push(error.message);
-    //         }
-    //     });
+    logIn(isLoading, user)
+        .then((data: LoginResponse) => {
+            errors.value = [];
+            router.push({ path: "/home", replace: true });
+        })
+        .catch((error: ErrorResponse) => {
+            if (Array.isArray(error.message)) {
+                errors.value = error.message;
+            } else {
+                errors.value.push(error.message);
+            }
+        });
 }
 </script>
 
