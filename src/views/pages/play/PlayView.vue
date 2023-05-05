@@ -13,7 +13,7 @@ import { Tag } from "../../../interfaces/tag.interface";
 import { useTags } from "../../../composables/useTag";
 
 const { getProfessors } = useProfessors();
-const { getTags } = useTags();
+const { getTags, joinTags } = useTags();
 const isLoading: Ref<boolean> = ref(false);
 
 const professorsSelected: Ref<User[]> = ref([]);
@@ -26,17 +26,32 @@ function professorRemoved(event: Event, professor: User) {
     professorsSelected.value = professorsSelected.value.filter((p) => {
         return p.name !== professor.name;
     });
-    console.log(professorsSelected.value);
+    searchTags();
+    tagsSelected.value = [];
 }
+
+function professorSelected(event: MultiSelectChangeEvent) {
+    searchTags();
+}
+
+function searchTags() {
+    tags.value = [];
+    tagsSelected.value = [];
+    professorsSelected.value.forEach(async (professor) => {
+        tags.value = joinTags(tags.value, await getTags(professor._id));
+    });
+}
+
 function setChipColors(event: MultiSelectChangeEvent) {
     setTimeout(() => {
-        let tokens = document.getElementsByClassName("p-multiselect-token");
+        let tokens = document
+            .querySelector("#tags")!
+            .querySelectorAll(".p-multiselect-token");
+        if (tokens == null) return;
         for (let i = 0; i < tokens.length; i++) {
             let token = tokens[i];
             let letter = "#FFFFFF";
             let calculateColors = hexToRgb(tagsSelected.value[i].color);
-            console.log(token);
-            console.log(tags.value[i].color);
 
             let red = calculateColors.r;
             let green = calculateColors.g;
@@ -69,13 +84,8 @@ async function filterProfessor(event: MultiSelectFilterEvent) {
     professors.value = await getProfessors(event.value);
 }
 
-async function filterTags(event: MultiSelectFilterEvent) {
-    tags.value = await getTags(event.value);
-}
-
 onMounted(async () => {
     professors.value = await getProfessors();
-    tags.value = await getTags();
 });
 </script>
 <template>
@@ -99,10 +109,14 @@ onMounted(async () => {
                 :showToggleAll="false"
                 display="chip"
                 @filter="filterProfessor"
+                @change="professorSelected"
+                @remove="professorRemoved"
             />
+
             <p class="text-3xl font-medium">{{ $t("play.tags") }}</p>
             <MultiSelect
                 filter
+                id="tags"
                 v-model="tagsSelected"
                 editable
                 :options="tags"
@@ -111,21 +125,17 @@ onMounted(async () => {
                 class="w-full mb-3"
                 :showToggleAll="false"
                 display="chip"
-                @filter="filterTags"
                 @change="setChipColors"
             />
-            <Button :label="$t('play.next')" class=""></Button>
+
+            <Button
+                v-bind:disabled="
+                    professorsSelected.length === 0 || tagsSelected.length === 0
+                "
+                :label="$t('play.next')"
+                routerLink="['/routePath']"
+            ></Button>
         </div>
-    </div>
-    <div
-        class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
-    >
-        <span v-for="professor in professorsSelected">
-            {{ professor.name }}
-        </span>
-        <span v-for="tag in tagsSelected">
-            {{ tag.name }}
-        </span>
     </div>
 </template>
 
