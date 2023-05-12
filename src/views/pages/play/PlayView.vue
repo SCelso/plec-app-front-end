@@ -11,10 +11,16 @@ import { User } from "../../../interfaces/user.interface";
 import { useProfessors } from "../../../composables/useProfessors";
 import { Tag } from "../../../interfaces/tag.interface";
 import { useTags } from "../../../composables/useTag";
+import { RouterLink, useRouter } from "vue-router";
+import SelectQuestions from "../../../components/SelectQuestions.vue";
+
+const router = useRouter();
 
 const { getProfessors } = useProfessors();
 const { getTags, joinTags } = useTags();
 const isLoading: Ref<boolean> = ref(false);
+
+const selectQuestions: Ref<boolean> = ref(false);
 
 const professorsSelected: Ref<User[]> = ref([]);
 let professors: Ref<User[]> = ref([]);
@@ -66,6 +72,7 @@ function setChipColors(event: MultiSelectChangeEvent) {
         }
     }, 10);
 }
+
 function hexToRgb(hex: string) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
@@ -133,10 +140,15 @@ onMounted(async () => {
                     professorsSelected.length === 0 || tagsSelected.length === 0
                 "
                 :label="$t('play.next')"
-                routerLink="['/routePath']"
+                @click="selectQuestions = true"
             ></Button>
         </div>
     </div>
+    <SelectQuestions
+        :professors="professorsSelected"
+        :tags="tagsSelected"
+        v-show="selectQuestions"
+    />
 </template>
 
 <style scoped></style>
