@@ -19,25 +19,38 @@ const props = defineProps({
 
 const { getQuestionsByProfessorAndTag } = useQuestions();
 // define ref question array
-let questions: Question[] = [];
+const questions: Ref<Question[]> = ref([]);
 
-onMounted(async () => {});
-onUpdated(async () => {
-    questions = [];
-    // for each professor search all questions by each tag and join them in questions array
-    props.professors.forEach(async (professor) => {
+function loadQuestions() {
+    questions.value = [];
+    props.professors.forEach((professor) => {
         props.tags.forEach(async (tag) => {
-            questions = questions.concat(
-                await getQuestionsByProfessorAndTag(professor._id, tag._id)
+            const newQuestions = await getQuestionsByProfessorAndTag(
+                professor._id,
+                tag._id
             );
+            questions.value = [
+                ...questions.value,
+                ...newQuestions.filter(
+                    (newQuestion) =>
+                        !questions.value.some(
+                            (question) => question._id === newQuestion._id
+                        )
+                ),
+            ];
         });
     });
+}
+
+onMounted(() => {
+    loadQuestions();
 });
 </script>
 
 <template>
+    <h1>Pruebita</h1>
     <div v-for="question in questions" :key="question._id">
-        <p>{{ question.description }}</p>
+        <p>{{ question.description }} {{ question._id }}</p>
         <p>{{ question.professor }}</p>
         <p>{{ question.tags }}</p>
     </div>

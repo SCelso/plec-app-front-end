@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Ref, unref } from "vue";
+import { Ref, computed, unref } from "vue";
 import { ref, onMounted } from "vue";
 import InputText from "primevue/inputtext";
 import MultiSelect, {
@@ -87,6 +87,18 @@ function hexToRgb(hex: string) {
               b: 0,
           };
 }
+
+const isNotValid = computed(() => {
+    if (
+        professorsSelected.value.length === 0 ||
+        tagsSelected.value.length === 0
+    ) {
+        selectQuestions.value = false;
+        return true;
+    } else {
+        return false;
+    }
+});
 async function filterProfessor(event: MultiSelectFilterEvent) {
     professors.value = await getProfessors(event.value);
 }
@@ -136,9 +148,7 @@ onMounted(async () => {
             />
 
             <Button
-                v-bind:disabled="
-                    professorsSelected.length === 0 || tagsSelected.length === 0
-                "
+                v-bind:disabled="isNotValid"
                 :label="$t('play.next')"
                 @click="selectQuestions = true"
             ></Button>
@@ -147,7 +157,7 @@ onMounted(async () => {
     <SelectQuestions
         :professors="professorsSelected"
         :tags="tagsSelected"
-        v-show="selectQuestions"
+        v-if="selectQuestions"
     />
 </template>
 
