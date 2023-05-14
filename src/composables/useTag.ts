@@ -1,21 +1,36 @@
-import { inject } from "vue";
+import { Ref, inject } from "vue";
 import { HttpAxios } from "../api/http-axios";
 import { Tag } from "../interfaces/tag.interface";
 import { ErrorResponse } from "../interfaces/responses/error.response";
 
 export function useTags() {
-    const apiUrl = inject("apiUrl") + "tags-users";
+    const apiUrl = inject("apiUrl");
     const http = new HttpAxios();
 
     const getTags = async (userId: string = "") => {
         return new Promise<Tag[]>((resolve, reject) => {
-            http.get(apiUrl + "/" + userId, {})
+            http.get(apiUrl + "tags-users" + "/" + userId, {})
                 .then((data: Tag[]) => {
                     resolve(data);
                 })
                 .catch((error: ErrorResponse[]) => {
                     reject(error);
                 });
+        });
+    };
+
+    // create tag
+    const createTag = async (isLoading: Ref<boolean>, tag: Tag) => {
+        return new Promise<Tag>((resolve, reject) => {
+            isLoading.value = true;
+            http.post(apiUrl + "tags", tag)
+                .then((data: Tag) => {
+                    resolve(data);
+                })
+                .catch((error: ErrorResponse) => {
+                    reject(error);
+                });
+            isLoading.value = false;
         });
     };
 
@@ -32,5 +47,6 @@ export function useTags() {
     return {
         joinTags,
         getTags,
+        createTag,
     };
 }

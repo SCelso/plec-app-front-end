@@ -30,7 +30,7 @@ const items = ref<MenuItem[]>([
     {
         label: `${i18n.global.t("navbar.create")}`,
         icon: "pi pi-fw pi-plus",
-        to: { path: "/home/create" },
+        to: { path: "/home/create/question" },
         visible: logged,
     },
     {

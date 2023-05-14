@@ -5,8 +5,24 @@ const i18n = createI18n({
 
     messages: {
         es: {
+            error: {
+                error: "Error",
+                creating_tag: "El tag ya existe",
+            },
             email: "Correo electrónico",
             password: "Contraseña",
+            create: {
+                success_tag: "Tag creado con éxito",
+                create: "Crear",
+                question: "Crear pregunta",
+                tag: "Crear tag",
+                simple_selection: "Pregunta simple",
+                multiple_selection: "Pregunta de selección múltiple",
+                true_false: "Pregunta de verdadero o falso",
+                type: "Tipo de pregunta",
+                tag_name: "Nombre del tag",
+                tag_color: "Color del tag",
+            },
             navbar: {
                 home: "Inicio",
                 play: "Jugar",
@@ -34,8 +50,24 @@ const i18n = createI18n({
             },
         },
         en: {
+            error: {
+                error: "Error",
+                creating_tag: "Tag already exists",
+            },
             email: "Email",
             password: "Password",
+            create: {
+                success_tag: "Tag created successfully",
+                create: "Create",
+                question: "Create question",
+                tag: "Create tag",
+                simple_selection: "Simple selection",
+                multiple_choice_selection: "Multiple choice selection",
+                true_false: "True or false",
+                type: "Question type",
+                tag_name: "Tag name",
+                tag_color: "Tag color",
+            },
             navbar: {
                 home: "Home",
                 play: "Play",
