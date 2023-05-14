@@ -9,6 +9,9 @@ import MultiSelect, {
     MultiSelectChangeEvent,
     MultiSelectFilterEvent,
 } from "primevue/multiselect";
+import { RouterLink, useRouter } from "vue-router";
+
+const router = useRouter();
 
 const props = defineProps({
     professors: {
@@ -47,6 +50,18 @@ function loadQuestions() {
     });
 }
 
+function startGame() {
+    // navigate to GameView with questions and tags
+    router.push({
+        // path: "/home/play-game",
+        name: "PlayGame",
+        query: {
+            questions: JSON.stringify(selectedQuestions.value),
+            tags: JSON.stringify(props.tags),
+        },
+    });
+}
+
 onMounted(() => {
     loadQuestions();
 });
@@ -62,5 +77,9 @@ onMounted(() => {
         :maxSelectedLabels="1"
         class="w-full mb-3"
     />
-    <Button class="text-3xl" :label="$t('play.start')" @click=""></Button>
+    <Button
+        class="text-3xl"
+        :label="$t('play.start')"
+        @click="startGame()"
+    ></Button>
 </template>

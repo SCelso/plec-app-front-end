@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Menubar from "primevue/menubar";
 import type { MenuItem } from "primevue/menuitem";
+import i18n from "../i18n";
 
 const props = defineProps({
     logged: Boolean,
@@ -14,12 +15,12 @@ const router = useRouter();
 
 const items = ref<MenuItem[]>([
     {
-        label: "Home",
+        label: `${i18n.global.t("navbar.home")}`,
         icon: "pi pi-fw pi-home",
         to: { path: "/home" },
     },
     {
-        label: "Sign In",
+        label: `${i18n.global.t("navbar.login")}`,
         icon: "pi pi-fw pi-sign-in",
         command: () => {
             router.push({ path: "/" });
@@ -27,19 +28,19 @@ const items = ref<MenuItem[]>([
         visible: !logged,
     },
     {
-        label: "Create",
+        label: `${i18n.global.t("navbar.create")}`,
         icon: "pi pi-fw pi-plus",
         to: { path: "/home/create" },
         visible: logged,
     },
     {
-        label: "Play",
+        label: `${i18n.global.t("navbar.play")}`,
         icon: "pi pi-fw pi-play",
         to: { path: "/home/play" },
         visible: logged,
     },
     {
-        label: "Sign Out",
+        label: `${i18n.global.t("navbar.logout")}`,
         icon: "pi pi-fw pi-sign-out",
         command: () => {
             localStorage.clear();

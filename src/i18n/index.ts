@@ -7,6 +7,14 @@ const i18n = createI18n({
         es: {
             email: "Correo electrónico",
             password: "Contraseña",
+            navbar: {
+                home: "Inicio",
+                play: "Jugar",
+                login: "Iniciar sesión",
+                logout: "Cerrar sesión",
+                register: "Registrarse",
+                create: "Crear",
+            },
             login: {
                 dont_have_account: "¿Aún no tienes una cuenta?",
                 create_account: "¡Crear cuenta!",
@@ -28,6 +36,14 @@ const i18n = createI18n({
         en: {
             email: "Email",
             password: "Password",
+            navbar: {
+                home: "Home",
+                play: "Play",
+                login: "Login",
+                logout: "Logout",
+                register: "Register",
+                create: "Create",
+            },
             login: {
                 dont_have_account: "Don't you have an account?",
                 create_account: "Create one!",

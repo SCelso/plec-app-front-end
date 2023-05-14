@@ -3,6 +3,7 @@ import LoginViewVue from "../views/auth/LoginView.vue";
 import PagesView from "../views/pages/PagesView.vue";
 import HomeView from "../views/pages/home/HomeView.vue";
 import PlayView from "../views/pages/play/PlayView.vue";
+import GameView from "../views/pages/play/GameView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,11 @@ const router = createRouter({
                 {
                     path: "play",
                     component: PlayView,
+                },
+                {
+                    path: "play-game",
+                    name: "PlayGame",
+                    component: GameView,
                 },
             ],
         },
