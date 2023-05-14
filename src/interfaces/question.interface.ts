@@ -4,14 +4,14 @@ import { Tag } from "./tag.interface";
 import { User } from "./user.interface";
 
 export interface Question {
-    type: string;
-    _id: string;
+    type?: string;
+    _id?: string;
     description: string;
-    image: string;
+    image?: string;
     answers: Answer[];
     tags: Tag[];
     difficulty: number;
-    professor: User;
+    professor?: User;
 }
 
 export interface Answer {

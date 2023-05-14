@@ -34,6 +34,18 @@ export function useTags() {
         });
     };
 
+    const getAllTags = async () => {
+        return new Promise<Tag[]>((resolve, reject) => {
+            http.get(apiUrl + "tags", {})
+                .then((data: Tag[]) => {
+                    resolve(data);
+                })
+                .catch((error: ErrorResponse[]) => {
+                    reject(error);
+                });
+        });
+    };
+
     const joinTags = (tags: Tag[], newTags: Tag[]) => {
         newTags.forEach((newTag) => {
             const tag = tags.find((tag) => tag._id === newTag._id);
@@ -48,5 +60,6 @@ export function useTags() {
         joinTags,
         getTags,
         createTag,
+        getAllTags,
     };
 }

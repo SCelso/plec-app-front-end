@@ -16,7 +16,6 @@ const router = useRouter();
 const items = ref<MenuItem[]>([
     {
         label: `${i18n.global.t("navbar.home")}`,
-        icon: "pi pi-fw pi-home",
         to: { path: "/home" },
     },
     {
@@ -63,7 +62,7 @@ const items = ref<MenuItem[]>([
                     alt="logo"
                     src="../assets/app-logo.png"
                     height="50"
-                    class="mr-0"
+                    class="mr-0 rotate"
                 />
             </template>
         </Menubar>

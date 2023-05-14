@@ -12,6 +12,9 @@ const i18n = createI18n({
             email: "Correo electrónico",
             password: "Contraseña",
             create: {
+                question_difficulty: "Dificultad",
+                question_answers: "Respuestas",
+                question_description: "Texto de la pregunta",
                 success_tag: "Tag creado con éxito",
                 create: "Crear",
                 question: "Crear pregunta",
@@ -24,7 +27,7 @@ const i18n = createI18n({
                 tag_color: "Color del tag",
             },
             navbar: {
-                home: "Inicio",
+                home: "PLECAPP",
                 play: "Jugar",
                 login: "Iniciar sesión",
                 logout: "Cerrar sesión",
@@ -41,7 +44,7 @@ const i18n = createI18n({
                 search_professor: "Buscar profesor",
                 search_tags: "Buscar etiquetas",
                 next: "Siguiente",
-                tags: "Etiquetas",
+                tags: "Tags",
                 professors: "Profesores",
                 select_questions: "Selecciona preguntas",
                 start: "Comenzar",
@@ -57,6 +60,9 @@ const i18n = createI18n({
             email: "Email",
             password: "Password",
             create: {
+                question_difficulty: "Difficulty",
+                question_answers: "Answers",
+                question_description: "Question text",
                 success_tag: "Tag created successfully",
                 create: "Create",
                 question: "Create question",
@@ -69,7 +75,7 @@ const i18n = createI18n({
                 tag_color: "Tag color",
             },
             navbar: {
-                home: "Home",
+                home: "PLECAPP",
                 play: "Play",
                 login: "Login",
                 logout: "Logout",
