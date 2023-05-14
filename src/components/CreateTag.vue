@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, Ref } from "vue";
+import { ref, Ref, computed } from "vue";
 import ColorPicker from "primevue/colorpicker";
 import { Tag } from "../interfaces/tag.interface";
 import { useTags } from "../composables/useTag";
@@ -37,6 +37,10 @@ function sendTag() {
             });
         });
 }
+
+const isDisabled = computed(() => {
+    return tag.value.name.length < 3 || tag.value.color.length < 6;
+});
 </script>
 <template>
     <h1 class="text-center text-5xl">{{ $t("create.tag") }}</h1>
@@ -63,7 +67,7 @@ function sendTag() {
         </div>
         <Button
             class="mb-5"
-            v-bind:disabled="tag.name.length < 3 || tag.color.length < 6"
+            v-bind:disabled="isDisabled"
             :label="$t('create.create')"
             @click="sendTag"
         ></Button>

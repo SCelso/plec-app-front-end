@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref, onMounted } from "vue";
+import { Ref, ref, onMounted, ComputedRef, computed } from "vue";
 import Textarea from "primevue/textarea";
 import { Question } from "../interfaces/question.interface";
 import Rating from "primevue/rating";
@@ -23,11 +23,24 @@ const tagsSelected: Ref<Tag[]> = ref([]);
 const tags: Ref<Tag[]> = ref([]);
 const isLoading: Ref<boolean> = ref(false);
 
+const isDisabled = computed(() => {
+    return (
+        question.value.description.length < 10 ||
+        tagsSelected.value.length < 1 ||
+        question.value.difficulty < 1 ||
+        question.value.answers.length < 1
+    );
+});
+
 onMounted(async () => {
     isLoading.value = true;
     tags.value = await getAllTags();
     isLoading.value = false;
 });
+
+function sendQuestion() {
+    console.log(question.value);
+}
 
 function setChipColors(event: MultiSelectChangeEvent) {
     setTimeout(() => {
@@ -77,15 +90,6 @@ function hexToRgb(hex: string) {
         class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
     >
         <p class="text-3xl font-medium">
-            {{ $t("create.question_description") }}
-        </p>
-        <Textarea
-            class="w-full"
-            v-model="question.description"
-            rows="5"
-            cols="30"
-        />
-        <p class="text-3xl font-medium">
             {{ $t("play.tags") }}
         </p>
         <MultiSelect
@@ -102,12 +106,27 @@ function hexToRgb(hex: string) {
             @change="setChipColors"
         />
         <p class="text-3xl font-medium">
-            {{ $t("create.question_answers") }}
+            {{ $t("create.question_description") }}
         </p>
-        <p class="text-xl font-medium">TODO: depends on the type of question</p>
+        <Textarea
+            class="w-full"
+            v-model="question.description"
+            rows="5"
+            cols="30"
+        />
         <p class="text-3xl font-medium">
             {{ $t("create.question_difficulty") }}
         </p>
-        <Rating v-model="question.difficulty" :cancel="false" />
+        <Rating class="mb-5" v-model="question.difficulty" :cancel="false" />
+        <p class="text-3xl font-medium">
+            {{ $t("create.question_answers") }}
+        </p>
+        <p class="text-xl font-medium">TODO: depends on the type of question</p>
+        <Button
+            v-bind:disabled="isDisabled"
+            @click="sendQuestion"
+            :label="$t('create.create')"
+            rounded
+        ></Button>
     </div>
 </template>
