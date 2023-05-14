@@ -49,6 +49,7 @@ function searchTags() {
 }
 
 function setChipColors(event: MultiSelectChangeEvent) {
+    selectQuestions.value = false;
     setTimeout(() => {
         let tokens = document
             .querySelector("#tags")!
@@ -112,7 +113,7 @@ onMounted(async () => {
         <div class="wrapper w-full flex justify-content-center">
             <ProgressSpinner v-show="isLoading" />
         </div>
-        <h1 class="text-center text-5xl">Play Game</h1>
+        <h1 class="text-center text-5xl">{{ $t("play.play") }}</h1>
         <div
             class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
         >
@@ -153,12 +154,16 @@ onMounted(async () => {
                 @click="selectQuestions = true"
             ></Button>
         </div>
+        <div
+            class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
+            v-if="selectQuestions"
+        >
+            <SelectQuestions
+                :professors="professorsSelected"
+                :tags="tagsSelected"
+            />
+        </div>
     </div>
-    <SelectQuestions
-        :professors="professorsSelected"
-        :tags="tagsSelected"
-        v-if="selectQuestions"
-    />
 </template>
 
 <style scoped></style>

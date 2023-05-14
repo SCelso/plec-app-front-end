@@ -5,6 +5,10 @@ import { Tag } from "../interfaces/tag.interface";
 import { User } from "../interfaces/user.interface";
 import { Question } from "../interfaces/question.interface";
 import { useQuestions } from "../composables/useQuestions";
+import MultiSelect, {
+    MultiSelectChangeEvent,
+    MultiSelectFilterEvent,
+} from "primevue/multiselect";
 
 const props = defineProps({
     professors: {
@@ -20,6 +24,7 @@ const props = defineProps({
 const { getQuestionsByProfessorAndTag } = useQuestions();
 // define ref question array
 const questions: Ref<Question[]> = ref([]);
+const selectedQuestions: Ref<Question[]> = ref([]);
 
 function loadQuestions() {
     questions.value = [];
@@ -48,10 +53,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <h1>Pruebita</h1>
-    <div v-for="question in questions" :key="question._id">
-        <p>{{ question.description }} {{ question._id }}</p>
-        <p>{{ question.professor }}</p>
-        <p>{{ question.tags }}</p>
-    </div>
+    <p class="text-3xl font-medium">{{ $t("play.questions") }}</p>
+    <MultiSelect
+        v-model="selectedQuestions"
+        :options="questions"
+        optionLabel="description"
+        :placeholder="$t('play.select_questions')"
+        :maxSelectedLabels="1"
+        class="w-full mb-3"
+    />
+    <Button class="text-3xl" :label="$t('play.start')" @click=""></Button>
 </template>
