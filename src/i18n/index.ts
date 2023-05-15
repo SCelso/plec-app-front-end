@@ -25,6 +25,9 @@ const i18n = createI18n({
                 type: "Tipo de pregunta",
                 tag_name: "Nombre del tag",
                 tag_color: "Color del tag",
+                add_answer: "Añadir respuesta",
+                true: "Verdadero",
+                false: "Falso",
             },
             navbar: {
                 home: "PLECAPP",
@@ -73,6 +76,9 @@ const i18n = createI18n({
                 type: "Question type",
                 tag_name: "Tag name",
                 tag_color: "Tag color",
+                add_answer: "Add answer",
+                true: "True",
+                false: "False",
             },
             navbar: {
                 home: "PLECAPP",

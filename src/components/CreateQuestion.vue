@@ -7,8 +7,13 @@ import MultiSelect, {
     MultiSelectChangeEvent,
     MultiSelectFilterEvent,
 } from "primevue/multiselect";
+import RadioButton from "primevue/radiobutton";
+import Checkbox from "primevue/checkbox";
+import TabView from "primevue/tabview";
+import TabPanel from "primevue/tabpanel";
 import { Tag } from "../interfaces/tag.interface";
 import { useTags } from "../composables/useTag";
+import i18n from "../i18n/index";
 
 const { getAllTags } = useTags();
 
@@ -18,6 +23,8 @@ const question: Ref<Question> = ref({
     tags: [],
     difficulty: 1,
 });
+
+let indexComponent = ref(0);
 
 const tagsSelected: Ref<Tag[]> = ref([]);
 const tags: Ref<Tag[]> = ref([]);
@@ -80,6 +87,41 @@ function hexToRgb(hex: string) {
               b: 0,
           };
 }
+
+const radioButtonVal = ref(0);
+
+function changeFormatAnswers(index: number) {
+    indexComponent.value = index;
+
+    question.value.answers = [];
+    if (index === 2) {
+        question.value.answers = [
+            {
+                text: i18n.global.t("create.true"),
+                val: 1,
+            },
+            {
+                text: i18n.global.t("create.false"),
+                val: 0,
+            },
+        ];
+    }
+}
+
+function setCorrectAnswerSimpleSelection() {
+    question.value.answers.forEach((answer) => {
+        answer.val = 0;
+    });
+    question.value.answers[radioButtonVal.value].val = 1;
+    console.log(question.value.answers);
+}
+
+function addAnswer() {
+    question.value.answers.push({
+        text: "",
+        val: 0,
+    });
+}
 </script>
 <template>
     <div class="wrapper w-full flex justify-content-center">
@@ -121,7 +163,89 @@ function hexToRgb(hex: string) {
         <p class="text-3xl font-medium">
             {{ $t("create.question_answers") }}
         </p>
-        <p class="text-xl font-medium">TODO: depends on the type of question</p>
+        <TabView @update:activeIndex="changeFormatAnswers" :activeIndex="0">
+            <TabPanel :header="$t('create.multiple_selection')">
+                <div>
+                    <Button
+                        type="button"
+                        :label="$t('create.add_answer')"
+                        icon="pi pi-plus"
+                        @click="addAnswer"
+                        class="mb-3"
+                    />
+                </div>
+                <div
+                    v-for="(answer, index) in question.answers"
+                    :key="index"
+                    class="flex flex-column align-items-center"
+                >
+                    <div class="flex flex-row align-items-baseline gap-2">
+                        <InputText
+                            :minlength="2"
+                            class="mb-2"
+                            v-model="question.answers[index].text"
+                        />
+                        <Checkbox
+                            v-model="question.answers[index].val"
+                            binary
+                            :trueValue="1"
+                            :falseValue="0"
+                        />
+                    </div>
+                </div>
+            </TabPanel>
+            <TabPanel :header="$t('create.simple_selection')">
+                <div>
+                    <Button
+                        type="button"
+                        :label="$t('create.add_answer')"
+                        icon="pi pi-plus"
+                        @click="addAnswer"
+                        class="mb-3"
+                    />
+                </div>
+                <div
+                    v-for="(answer, index) in question.answers"
+                    :key="index"
+                    class="flex flex-column align-items-center"
+                >
+                    <div class="flex flex-row align-items-baseline gap-2">
+                        <InputText
+                            :minlength="2"
+                            class="mb-2"
+                            v-model="question.answers[index].text"
+                        />
+                        <RadioButton
+                            v-model="radioButtonVal"
+                            name="correct"
+                            :value="index"
+                            @change="setCorrectAnswerSimpleSelection"
+                        />
+                    </div>
+                </div>
+            </TabPanel>
+            <TabPanel :header="$t('create.true_false')">
+                <div
+                    v-for="(answer, index) in question.answers"
+                    :key="index"
+                    class="flex flex-column align-items-center"
+                >
+                    <div class="flex flex-row align-items-baseline gap-2">
+                        <InputText
+                            readonly
+                            class="mb-2"
+                            v-model="question.answers[index].text"
+                        />
+                        <RadioButton
+                            v-model="radioButtonVal"
+                            name="correct"
+                            :value="index"
+                            @change="setCorrectAnswerSimpleSelection()"
+                        />
+                    </div>
+                </div>
+            </TabPanel>
+        </TabView>
         <Button
             v-bind:disabled="isDisabled"
             @click="sendQuestion"
