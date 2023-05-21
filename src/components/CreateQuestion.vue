@@ -13,9 +13,16 @@ import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
 import { Tag } from "../interfaces/tag.interface";
 import { useTags } from "../composables/useTag";
+import { useQuestions } from "../composables/useQuestions";
 import i18n from "../i18n/index";
+import Swal from "sweetalert2";
 
 const { getAllTags } = useTags();
+const {
+    createSimpleSelectionQuestion,
+    createMultipleSelectionQuestion,
+    createTrueFalseQuestion,
+} = useQuestions();
 
 const question: Ref<Question> = ref({
     description: "",
@@ -32,10 +39,20 @@ const isLoading: Ref<boolean> = ref(false);
 
 const isDisabled = computed(() => {
     return (
-        question.value.description.length < 10 ||
+        question.value.description.length < 5 ||
         tagsSelected.value.length < 1 ||
         question.value.difficulty < 1 ||
-        question.value.answers.length < 1
+        question.value.answers.length < 2 ||
+        question.value.answers.length > 4 ||
+        question.value.answers.some((answer) => answer.text.length < 2) ||
+        !question.value.answers.some((answer) => answer.val === 1)
+    );
+});
+
+const isAddDisabled = computed(() => {
+    return (
+        question.value.answers.length > 3 ||
+        question.value.answers.some((answer) => answer.text.length < 2)
     );
 });
 
@@ -46,7 +63,45 @@ onMounted(async () => {
 });
 
 function sendQuestion() {
-    console.log(question.value);
+    if (indexComponent.value === 0) {
+        createMultipleSelectionQuestion(question.value).then(
+            manageQuestionCreateResponseOk,
+            manageQuestionCreateResponseError
+        );
+    } else if (indexComponent.value === 1) {
+        createSimpleSelectionQuestion(question.value).then(
+            manageQuestionCreateResponseOk,
+            manageQuestionCreateResponseError
+        );
+    } else if (indexComponent.value === 2) {
+        createTrueFalseQuestion(question.value).then(
+            manageQuestionCreateResponseOk,
+            manageQuestionCreateResponseError
+        );
+    }
+    question.value = {
+        description: "",
+        answers: [],
+        tags: [],
+        difficulty: 1,
+    };
+    tagsSelected.value = [];
+}
+
+function manageQuestionCreateResponseOk() {
+    Swal.fire({
+        title: i18n.global.t("create.question_created"),
+        icon: "success",
+        confirmButtonText: i18n.global.t("create.ok"),
+    });
+}
+
+function manageQuestionCreateResponseError(error: string) {
+    Swal.fire({
+        title: i18n.global.t("create.question_not_created"),
+        icon: "error",
+        confirmButtonText: i18n.global.t("create.ok"),
+    });
 }
 
 function setChipColors(event: MultiSelectChangeEvent) {
@@ -113,7 +168,6 @@ function setCorrectAnswerSimpleSelection() {
         answer.val = 0;
     });
     question.value.answers[radioButtonVal.value].val = 1;
-    console.log(question.value.answers);
 }
 
 function addAnswer() {
@@ -171,6 +225,7 @@ function addAnswer() {
                         :label="$t('create.add_answer')"
                         icon="pi pi-plus"
                         @click="addAnswer"
+                        v-bind:disabled="isAddDisabled"
                         class="mb-3"
                     />
                 </div>
@@ -201,6 +256,7 @@ function addAnswer() {
                         :label="$t('create.add_answer')"
                         icon="pi pi-plus"
                         @click="addAnswer"
+                        v-bind:disabled="isAddDisabled"
                         class="mb-3"
                     />
                 </div>

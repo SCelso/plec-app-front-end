@@ -28,6 +28,9 @@ const i18n = createI18n({
                 add_answer: "Añadir respuesta",
                 true: "Verdadero",
                 false: "Falso",
+                question_created: "Pregunta creada con éxito",
+                question_not_created: "No se ha podido crear la pregunta",
+                ok: "Ok",
             },
             navbar: {
                 home: "PLECAPP",
@@ -79,6 +82,9 @@ const i18n = createI18n({
                 add_answer: "Add answer",
                 true: "True",
                 false: "False",
+                question_created: "Question created successfully",
+                question_not_created: "Question could not be created",
+                ok: "Ok",
             },
             navbar: {
                 home: "PLECAPP",
