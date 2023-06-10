@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-    <h1>Hola mundo uwu</h1>
+    <h1>Sample text</h1>
 </template>
