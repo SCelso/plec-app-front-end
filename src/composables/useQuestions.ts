@@ -31,8 +31,12 @@ export function useQuestions() {
         });
     };
 
-    const createQuestion = async (question: Question, endpoint: string) => {
-        const tagsExistId: string[] = question.tags
+    const createQuestion = async (
+        question: Question,
+        endpoint: string,
+        tags: Tag[]
+    ) => {
+        const tagsExistId: string[] = tags
             .filter((tag: Tag) => {
                 if (tag._id) {
                     return tag._id;
@@ -62,16 +66,19 @@ export function useQuestions() {
         });
     };
 
-    const createSimpleSelectionQuestion = (question: Question) => {
-        return createQuestion(question, "/simple-selection");
+    const createSimpleSelectionQuestion = (question: Question, tags: Tag[]) => {
+        return createQuestion(question, "/simple-selection", tags);
     };
 
-    const createMultipleSelectionQuestion = (question: Question) => {
-        return createQuestion(question, "/multiple-selection");
+    const createMultipleSelectionQuestion = (
+        question: Question,
+        tags: Tag[]
+    ) => {
+        return createQuestion(question, "/multiple-selection", tags);
     };
 
-    const createTrueFalseQuestion = (question: Question) => {
-        return createQuestion(question, "/true-false");
+    const createTrueFalseQuestion = (question: Question, tags: Tag[]) => {
+        return createQuestion(question, "/true-false", tags);
     };
 
     return {

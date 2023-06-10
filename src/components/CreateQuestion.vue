@@ -64,17 +64,20 @@ onMounted(async () => {
 
 function sendQuestion() {
     if (indexComponent.value === 0) {
-        createMultipleSelectionQuestion(question.value).then(
+        createMultipleSelectionQuestion(
+            question.value,
+            tagsSelected.value
+        ).then(
             manageQuestionCreateResponseOk,
             manageQuestionCreateResponseError
         );
     } else if (indexComponent.value === 1) {
-        createSimpleSelectionQuestion(question.value).then(
+        createSimpleSelectionQuestion(question.value, tagsSelected.value).then(
             manageQuestionCreateResponseOk,
             manageQuestionCreateResponseError
         );
     } else if (indexComponent.value === 2) {
-        createTrueFalseQuestion(question.value).then(
+        createTrueFalseQuestion(question.value, tagsSelected.value).then(
             manageQuestionCreateResponseOk,
             manageQuestionCreateResponseError
         );

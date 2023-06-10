@@ -61,7 +61,7 @@ function begin() {
 
 function startGame() {
     waitingPlayers.value = false;
-    socket.emit("startGame");
+    socket.emit("startGame", idJoinGame.value);
 }
 
 const players: Ref<string[]> = ref([]);
@@ -78,8 +78,6 @@ onMounted(async () => {
 </script>
 <template>
     <div class="w-full mt-4 xl:p-6 sm:p-2 fadein">
-        <!-- <h1 class="text-center text-5xl">{{ $t("play.play") }}</h1> -->
-
         <div
             v-if="waitingPlayers"
             class="surface-card shadow-3 p-5 mb-5 mt-3 flex flex-column align-items-center"
