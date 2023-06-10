@@ -49,7 +49,10 @@ function signIn(event: Event) {
                     height="200"
                     class="mb-3"
                 />
-                <div class="text-900 text-3xl font-medium mb-3">Bienvenido</div>
+                <div class="text-900 text-4xl font-medium mb-1">PlecApp</div>
+                <div class="text-2xl font-medium mb-3 text-primary">
+                    {{ $t("login.login_title") }}
+                </div>
                 <span class="text-600 font-medium line-height-3">{{
                     $t("login.dont_have_account")
                 }}</span>
@@ -79,17 +82,8 @@ function signIn(event: Event) {
                     v-model="user.password"
                     id="password"
                     type="password"
-                    class="w-full mb-3"
+                    class="w-full mb-5"
                 />
-
-                <div
-                    class="flex align-items-center justify-content-between mb-5"
-                >
-                    <a
-                        class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
-                        >{{ $t("login.forgot_password") }}</a
-                    >
-                </div>
 
                 <transition-group name="p-message" tag="div">
                     <Message
