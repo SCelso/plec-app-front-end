@@ -43,12 +43,13 @@ function addListeners() {
     socket.on("idGame", (idGame: { idGame: string }) => {
         idJoinGame.value = idGame.idGame;
     });
-    socket.on("connect", () => {
-        console.log("connected");
-    });
+    socket.on("connect", () => {});
     socket.on("players-updated", (clients: string[]) => {
         players.value = clients;
-        console.log(players.value);
+    });
+    socket.on("gameStatus", (players: GamePlayer[]) => {
+        console.log(players);
+        gamePlayers.value = players;
     });
 }
 
@@ -77,38 +78,6 @@ const idJoinGame = ref("");
 
 onMounted(async () => {
     connectToServer();
-    gamePlayers.value = [
-        {
-            player: {
-                _id: "12345667",
-                email: "prueba@asda.asd",
-                nickname: "sergio",
-                __v: 4,
-            },
-            points: 0,
-            index: 0,
-        },
-        {
-            player: {
-                _id: "12345667",
-                email: "prueba@asda.asd",
-                nickname: "jaime",
-                __v: 4,
-            },
-            points: 100,
-            index: 1,
-        },
-        {
-            player: {
-                _id: "12345667",
-                email: "prueba@asda.asd",
-                nickname: "martin",
-                __v: 4,
-            },
-            points: 50,
-            index: 1,
-        },
-    ];
 });
 
 const gamePlayersSorted = computed(() => {
@@ -151,6 +120,7 @@ const gamePlayersSorted = computed(() => {
                 <Button
                     @click="startGame"
                     :label="$t('play.start_game')"
+                    :disabled="players.length < 1"
                     class="mb-3"
                 ></Button>
             </div>
