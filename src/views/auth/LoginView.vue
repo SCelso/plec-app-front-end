@@ -39,7 +39,9 @@ function signIn(event: Event) {
 
 <template>
     <div class="wrapper">
-        <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+        <div
+            class="surface-card p-4 shadow-2 border-round w-full lg:w-6 flip animation-duration-500"
+        >
             <div class="text-center mb-5">
                 <img
                     src="../../assets/app-logo.png"

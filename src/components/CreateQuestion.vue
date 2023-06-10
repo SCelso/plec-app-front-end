@@ -184,9 +184,11 @@ function addAnswer() {
     <div class="wrapper w-full flex justify-content-center">
         <ProgressSpinner v-show="isLoading" />
     </div>
-    <h1 class="text-center text-5xl">{{ $t("create.question") }}</h1>
+    <h1 class="text-center text-5xl flipup animation-duration-300">
+        {{ $t("create.question") }}
+    </h1>
     <div
-        class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
+        class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center flipup animation-duration-300"
     >
         <p class="text-3xl font-medium">
             {{ $t("play.tags") }}

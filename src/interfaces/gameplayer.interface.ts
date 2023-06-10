@@ -7,6 +7,6 @@ interface Player {
 
 export interface GamePlayer {
     player: Player;
-    points: 0;
-    index: 0;
+    points: number;
+    index: number;
 }

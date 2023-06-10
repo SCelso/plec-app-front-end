@@ -109,7 +109,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div class="w-full mt-4 xl:p-6 sm:p-2 fadein">
+    <div class="w-full mt-4 xl:p-6 sm:p-2 fadein animation-duration-500">
         <div class="wrapper w-full flex justify-content-center">
             <ProgressSpinner v-show="isLoading" />
         </div>
@@ -155,7 +155,7 @@ onMounted(async () => {
             ></Button>
         </div>
         <div
-            class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
+            class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center fadein animation-duration-500"
             v-if="selectQuestions"
         >
             <SelectQuestions

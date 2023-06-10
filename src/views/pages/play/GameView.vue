@@ -3,9 +3,10 @@ import { useRouter } from "vue-router";
 import { Question } from "../../../interfaces/question.interface";
 import { Tag as Tagito } from "../../../interfaces/tag.interface";
 import { Manager, Socket } from "socket.io-client";
-import { Ref, ref, onMounted } from "vue";
+import { Ref, ref, onMounted, onUpdated, computed } from "vue";
 import Divider from "primevue/divider";
 import Tag from "primevue/tag";
+import { GamePlayer } from "../../../interfaces/gameplayer.interface";
 
 const router = useRouter();
 
@@ -66,6 +67,8 @@ function startGame() {
 
 const players: Ref<string[]> = ref([]);
 
+const gamePlayers: Ref<GamePlayer[]> = ref([]);
+
 const waitingPlayers = ref(true);
 
 const hasBegun = ref(false);
@@ -74,6 +77,44 @@ const idJoinGame = ref("");
 
 onMounted(async () => {
     connectToServer();
+    gamePlayers.value = [
+        {
+            player: {
+                _id: "12345667",
+                email: "prueba@asda.asd",
+                nickname: "sergio",
+                __v: 4,
+            },
+            points: 0,
+            index: 0,
+        },
+        {
+            player: {
+                _id: "12345667",
+                email: "prueba@asda.asd",
+                nickname: "jaime",
+                __v: 4,
+            },
+            points: 100,
+            index: 1,
+        },
+        {
+            player: {
+                _id: "12345667",
+                email: "prueba@asda.asd",
+                nickname: "martin",
+                __v: 4,
+            },
+            points: 50,
+            index: 1,
+        },
+    ];
+});
+
+const gamePlayersSorted = computed(() => {
+    return gamePlayers.value.sort((a, b) => {
+        return b.points - a.points;
+    });
 });
 </script>
 <template>
@@ -84,12 +125,13 @@ onMounted(async () => {
         >
             <Button
                 v-if="!hasBegun"
+                class="scalein animation-duration-800 text-3xl"
                 @click="begin"
                 :label="$t('play.open_room')"
             ></Button>
             <div
                 v-if="hasBegun"
-                class="flex flex-column align-items-center w-full"
+                class="flex flex-column align-items-center w-full scalein animation-duration-300"
             >
                 <p class="text-3xl mb-4">
                     {{ $t("play.code") }}
@@ -117,7 +159,36 @@ onMounted(async () => {
             v-if="!waitingPlayers && hasBegun"
             class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
         >
-            <p class="text-3xl">{{ $t("play.ranking") }}</p>
+            <p class="text-3xl mb-5">{{ $t("play.ranking") }}</p>
+            <div id="HEADERS" class="w-full text-center">
+                <div class="flex flex-row justify-content-evenly mb-2">
+                    <p class="text-xl mb-0 w-4">
+                        {{ $t("play.player") }}
+                    </p>
+                    <p class="text-xl mb-0 w-4">
+                        {{ $t("play.question") }}
+                    </p>
+                    <p class="text-xl mb-0 w-4">
+                        {{ $t("play.points") }}
+                    </p>
+                </div>
+                <div v-for="player in gamePlayersSorted" class="mb-2">
+                    <div
+                        class="flex flex-row justify-content-evenly bg-primary scalein animation-duration-1000"
+                    >
+                        <p class="text-xl mb-0 w-4">
+                            {{ player.player.nickname }}
+                        </p>
+                        <p class="text-xl mb-0 w-4">
+                            {{ player.index }} / {{ questions.length }}
+                        </p>
+                        <p class="text-xl mb-0 w-4">
+                            {{ player.points }}
+                        </p>
+                    </div>
+                    <hr class="mt-1 mb-0" />
+                </div>
+            </div>
         </div>
     </div>
 </template>

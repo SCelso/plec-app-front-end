@@ -43,9 +43,11 @@ const isDisabled = computed(() => {
 });
 </script>
 <template>
-    <h1 class="text-center text-5xl">{{ $t("create.tag") }}</h1>
+    <h1 class="text-center text-5xl flip animation-duration-300">
+        {{ $t("create.tag") }}
+    </h1>
     <div
-        class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center"
+        class="surface-card shadow-3 p-5 mb-5 flex flex-column align-items-center flip animation-duration-300"
     >
         <p class="text-3xl font-medium">{{ $t("create.tag_name") }}</p>
         <InputText
